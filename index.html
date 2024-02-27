@@ -13,11 +13,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 20px;
+      margin-top: 10px;
     }
     .counter {
-      font-size: 20px;
+      font-size: 14px;
       margin: 0 10px;
+    }
+    .button {
+      cursor: pointer;
+      fill: lightgrey;
+    }
+    .button:hover {
+      fill: darkgrey;
     }
   </style>
 </head>
@@ -25,48 +32,52 @@
   <svg viewBox="0 0 1000 200">
     <!-- Circles -->
     <!-- Circle 1 -->
-    <circle cx="50" cy="50" r="20" fill="red" />
+    <g>
+      <circle cx="50" cy="50" r="20" fill="red" />
+      <text x="50" y="100" text-anchor="middle">Circle 1</text>
+      <g class="counter-container">
+        <text x="50" y="120" class="counter" id="counter1">0</text>
+        <rect x="20" y="140" width="30" height="30" class="button" onclick="decrementCounter(1)"/>
+        <rect x="80" y="140" width="30" height="30" class="button" onclick="incrementCounter(1)"/>
+        <text x="30" y="165" font-size="20px" fill="black" onclick="decrementCounter(1)">-</text>
+        <text x="90" y="165" font-size="20px" fill="black" onclick="incrementCounter(1)">+</text>
+      </g>
+    </g>
     <!-- Circle 2 -->
-    <circle cx="150" cy="50" r="20" fill="green" />
-    <!-- Circle 3 -->
-    <circle cx="250" cy="50" r="20" fill="blue" />
+    <g>
+      <circle cx="150" cy="50" r="20" fill="green" />
+      <text x="150" y="100" text-anchor="middle">Circle 2</text>
+      <g class="counter-container">
+        <text x="150" y="120" class="counter" id="counter2">0</text>
+        <rect x="120" y="140" width="30" height="30" class="button" onclick="decrementCounter(2)"/>
+        <rect x="180" y="140" width="30" height="30" class="button" onclick="incrementCounter(2)"/>
+        <text x="130" y="165" font-size="20px" fill="black" onclick="decrementCounter(2)">-</text>
+        <text x="190" y="165" font-size="20px" fill="black" onclick="incrementCounter(2)">+</text>
+      </g>
+    </g>
     <!-- Add more circles as needed -->
 
-    <!-- Text Labels -->
-    <text x="50" y="100" text-anchor="middle">Circle 1</text>
-    <text x="150" y="100" text-anchor="middle">Circle 2</text>
-    <text x="250" y="100" text-anchor="middle">Circle 3</text>
-    <!-- Add more text labels as needed -->
+    <!-- JavaScript for Counters -->
+    <script>
+      const counters = [0, 0]; // Array to store counters for each circle
 
-    <!-- Counter -->
-    <g class="counter-container">
-      <text x="400" y="160" class="counter">Count: <tspan id="count">0</tspan></text>
-      <rect x="350" y="140" width="30" height="30" fill="lightgrey" onclick="decrementCount()"/>
-      <rect x="450" y="140" width="30" height="30" fill="lightgrey" onclick="incrementCount()"/>
-      <text x="360" y="165" font-size="20px" fill="black" onclick="decrementCount()">-</text>
-      <text x="465" y="165" font-size="20px" fill="black" onclick="incrementCount()">+</text>
-    </g>
-  </svg>
-
-  <script>
-    let count = 0;
-    const countElement = document.getElementById('count');
-
-    function updateCount() {
-      countElement.textContent = count;
-    }
-
-    function incrementCount() {
-      count++;
-      updateCount();
-    }
-
-    function decrementCount() {
-      if (count > 0) {
-        count--;
-        updateCount();
+      function updateCounter(circleIndex) {
+        const counterElement = document.getElementById('counter' + circleIndex);
+        counterElement.textContent = counters[circleIndex - 1];
       }
-    }
-  </script>
+
+      function incrementCounter(circleIndex) {
+        counters[circleIndex - 1]++;
+        updateCounter(circleIndex);
+      }
+
+      function decrementCounter(circleIndex) {
+        if (counters[circleIndex - 1] > 0) {
+          counters[circleIndex - 1]--;
+          updateCounter(circleIndex);
+        }
+      }
+    </script>
+  </svg>
 </body>
 </html>
